@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <!-- Set language to Hebrew and direction to RTL -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>מחשבון שולחנות לאירוע יום הולדת</title>
+    <!-- Bootstrap CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        text-align: right; /* Align text to the right */
+      }
+      .container {
+        max-width: 400px; /* Set a maximum width for the container */
+        margin: 0 auto; /* Center the container */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center">מחשבון שולחנות לאירוע יום הולדת</h1>
+      <form id="optionForm">
+        <div class="form-group">
+          <label for="options">בחר מיקום מסיבה</label>
+          <select class="form-control" id="options">
+            <option value="1">צמוד לספה</option>
+            <option value="2">באזור הרחבה/אחר</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="numberInput">הזן כמות אנשים</label>
+          <input
+            type="number"
+            class="form-control"
+            id="numberInput"
+            placeholder="הזן מספר"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">שלח</button>
+        <!-- Submit button in Hebrew -->
+      </form>
+
+      <div class="mt-4" id="solutionArea">
+        <h3>תשובה:</h3>
+        <p id="solution"></p>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+      document
+        .getElementById("optionForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent the form from submitting and refreshing the page
+          /* total number of people to be seated */
+          let X = 0;
+          const nearSofaTablesCalculator = (numberOfPeople) =>
+            Math.ceil((numberOfPeople - 6) / 2.7) + 2; // Calculation for near the sofa
+
+          const fullChairTablesCalculator = (numberOfPeople) =>
+            Math.ceil(numberOfPeople / 3); // Calculation for all sides with chairs
+
+          const selectedOption = document.getElementById("options").value;
+          const numberInput = parseInt(
+            document.getElementById("numberInput").value,
+            10
+          ); // Parse the input to an integer
+
+          let result;
+          // Determine which calculation to use based on the selected option
+          if (selectedOption === "1") {
+            result = nearSofaTablesCalculator(numberInput);
+            document.getElementById(
+              "solution"
+            ).innerText = `מספר השולחנות שנדרשים כדי להכיל ${numberInput} אנשים ליד הספה הוא: ${result}`;
+          } else {
+            result = fullChairTablesCalculator(numberInput);
+            document.getElementById(
+              "solution"
+            ).innerText = `מספר השולחנות שנדרשים כדי להכיל ${numberInput} אנשים באזורים עם כיסאות הוא: ${result}`;
+          }
+        });
+    </script>
+  </body>
+</html>
