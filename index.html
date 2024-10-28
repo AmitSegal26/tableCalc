@@ -25,13 +25,6 @@
       <h1 class="text-center">מחשבון שולחנות לאירוע יום הולדת</h1>
       <form id="optionForm">
         <div class="form-group">
-          <label for="options">בחר מיקום מסיבה</label>
-          <select class="form-control" id="options">
-            <option value="1">צמוד לספה</option>
-            <option value="2">באזור הרחבה/אחר</option>
-          </select>
-        </div>
-        <div class="form-group">
           <label for="numberInput">הזן כמות אנשים</label>
           <input
             type="number"
@@ -62,32 +55,18 @@
         .addEventListener("submit", function (event) {
           event.preventDefault(); // Prevent the form from submitting and refreshing the page
           /* total number of people to be seated */
-          let X = 0;
-          const nearSofaTablesCalculator = (numberOfPeople) =>
-            Math.ceil((numberOfPeople - 6) / 2.7) + 2; // Calculation for near the sofa
-
           const fullChairTablesCalculator = (numberOfPeople) =>
-            Math.ceil(numberOfPeople / 3); // Calculation for all sides with chairs
-
-          const selectedOption = document.getElementById("options").value;
+            Math.ceil((numberOfPeople - 2) / 2); // Calculation for all sides with chairs
           const numberInput = parseInt(
             document.getElementById("numberInput").value,
             10
           ); // Parse the input to an integer
-
           let result;
-          // Determine which calculation to use based on the selected option
-          if (selectedOption === "1") {
-            result = nearSofaTablesCalculator(numberInput);
-            document.getElementById(
-              "solution"
-            ).innerText = `מספר השולחנות שנדרשים כדי להכיל ${numberInput} אנשים ליד הספה הוא: ${result}`;
-          } else {
-            result = fullChairTablesCalculator(numberInput);
-            document.getElementById(
-              "solution"
-            ).innerText = `מספר השולחנות שנדרשים כדי להכיל ${numberInput} אנשים באזורים עם כיסאות הוא: ${result}`;
-          }
+          // anywhere else (chairs are around the tables)
+          result = fullChairTablesCalculator(numberInput);
+          document.getElementById(
+            "solution"
+          ).innerText = `מספר השולחנות שנדרשים כדי להכיל ${numberInput} אנשים באזורים עם כיסאות הוא: ${result}`;
         });
     </script>
   </body>
